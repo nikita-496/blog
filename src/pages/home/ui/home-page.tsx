@@ -21,14 +21,18 @@ export function HomePage() {
 		const params = new URLSearchParams(window.location.search);
 		let code = params.get("code");
 		let deviceId = params.get("device_id");
-		if (code && deviceId) {
-			console.log(code, deviceId);
+		const exchangeCode = async () => {
 			try {
-				const result = VKID.Auth.exchangeCode(code, deviceId);
+				const result = await VKID.Auth.exchangeCode(code, deviceId);
 				console.log(result);
 			} catch (error) {
+				console.log("Error");
 				console.error(error);
 			}
+		};
+		if (code && deviceId) {
+			console.log(code, deviceId);
+			exchangeCode();
 		}
 	}, []);
 
