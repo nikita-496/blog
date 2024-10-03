@@ -33,11 +33,10 @@ export function HomePage() {
 				console.error(error);
 			}
 		};
-		exchangeCode();
-		/*if (code && device_id) {
+		if (code && device_id) {
 			console.log(code, device_id);
 			exchangeCode();
-		}*/
+		}
 	}, []);
 
 	return (
