@@ -41,6 +41,15 @@ export function HomePage() {
 		}
 	}, []);
 
+	const login = async () => {
+		try {
+			const result = await VKID.Auth.login();
+			console.log(result);
+		} catch (error) {
+			console.log("error");
+		}
+	};
+
 	return (
 		<div
 			className={`grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
@@ -49,6 +58,7 @@ export function HomePage() {
 				<h1>Блог</h1>
 				{data && !error && <PostList posts={data.posts} />}
 				<div id="VkIdSdkOneTap"></div>
+				<button onClick={login}>Login</button>
 			</main>
 			<footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center"></footer>
 		</div>
