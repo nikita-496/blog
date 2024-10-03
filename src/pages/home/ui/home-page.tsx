@@ -1,9 +1,20 @@
 import { Posts } from "@/entities/post";
 import { useFetch } from "@/shared/api";
 import { PostList } from "@/widgest/post-list";
+import { useEffect } from "react";
 
 export function HomePage() {
 	const { data, error } = useFetch<Posts>("https://dummyjson.com/posts");
+	useEffect(() => {
+		//@ts-ignore
+		const VKID = window.VKIDSDK;
+		VKID.Config.set({
+			app: process.env.NEXT_PUBLIC_VK_APP_ID,
+			redirectUrl: process.env.NEXT_PUBLIC_REDIRECT_URL,
+			scope: "email phone",
+		});
+	}, []);
+
 	return (
 		<div
 			className={`grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
