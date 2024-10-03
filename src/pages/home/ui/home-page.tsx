@@ -19,7 +19,7 @@ export function HomePage() {
 		const oneTap = new VKID.OneTap();
 		const container = document.getElementById("VkIdSdkOneTap");
 		if (container) {
-			oneTap.render({ container });
+			oneTap.render({ container }).on(VKID.WidgetEvents.ERROR, console.error);
 		}
 		const params = new URLSearchParams(window.location.search);
 		let code = params.get("code");
@@ -27,7 +27,7 @@ export function HomePage() {
 		const exchangeCode = async () => {
 			try {
 				const result = await VKID.Auth.exchangeCode(code, device_id);
-				console.log(result);
+				console.log("result", result);
 			} catch (error) {
 				console.log("Error");
 				console.error(error);
