@@ -11,7 +11,10 @@ export function HomePage() {
 		VKID.Config.set({
 			app: process.env.NEXT_PUBLIC_VK_APP_ID,
 			redirectUrl: process.env.NEXT_PUBLIC_REDIRECT_URL,
-			scope: "email phone",
+			state: "dj29fnsadjsd82",
+			codeVerifier: "FGH767Gd65",
+			scope: "email",
+			mode: VKID.ConfigAuthMode.InNewTab,
 		});
 		const oneTap = new VKID.OneTap();
 		const container = document.getElementById("VkIdSdkOneTap");
@@ -20,20 +23,21 @@ export function HomePage() {
 		}
 		const params = new URLSearchParams(window.location.search);
 		let code = params.get("code");
-		let deviceId = params.get("device_id");
+		let device_id = params.get("device_id");
 		const exchangeCode = async () => {
 			try {
-				const result = await VKID.Auth.exchangeCode(code, deviceId);
+				const result = await VKID.Auth.exchangeCode(code, device_id);
 				console.log(result);
 			} catch (error) {
 				console.log("Error");
 				console.error(error);
 			}
 		};
-		if (code && deviceId) {
-			console.log(code, deviceId);
+		exchangeCode();
+		/*if (code && device_id) {
+			console.log(code, device_id);
 			exchangeCode();
-		}
+		}*/
 	}, []);
 
 	return (
