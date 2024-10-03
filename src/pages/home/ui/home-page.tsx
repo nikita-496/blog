@@ -23,7 +23,12 @@ export function HomePage() {
 		let deviceId = params.get("device_id");
 		if (code && deviceId) {
 			console.log(code, deviceId);
-			VKID.Auth.exchangeCode(code, deviceId);
+			try {
+				const result = VKID.Auth.exchangeCode(code, deviceId);
+				console.log(result);
+			} catch (error) {
+				console.error(error);
+			}
 		}
 	}, []);
 
