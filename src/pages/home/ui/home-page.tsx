@@ -13,6 +13,18 @@ export function HomePage() {
 			redirectUrl: process.env.NEXT_PUBLIC_REDIRECT_URL,
 			scope: "email phone",
 		});
+		const oneTap = new VKID.OneTap();
+		const container = document.getElementById("VkIdSdkOneTap");
+		if (container) {
+			oneTap.render({ container });
+		}
+		const params = new URLSearchParams(window.location.search);
+		let code = params.get("code");
+		let deviceId = params.get("device_id");
+		if (code && deviceId) {
+			console.log(code, deviceId);
+			VKID.Auth.exchangeCode(code, deviceId);
+		}
 	}, []);
 
 	return (
@@ -21,8 +33,8 @@ export function HomePage() {
 		>
 			<main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
 				<h1>Блог</h1>
-
 				{data && !error && <PostList posts={data.posts} />}
+				<div id="VkIdSdkOneTap"></div>
 			</main>
 			<footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center"></footer>
 		</div>
