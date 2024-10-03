@@ -2,19 +2,19 @@ import { Posts } from "@/entities/post";
 import { useFetch } from "@/shared/api";
 import { PostList } from "@/widgest/post-list";
 import { useEffect } from "react";
+import * as VKID from "@vkid/sdk";
 
 export function HomePage() {
 	const { data, error } = useFetch<Posts>("https://dummyjson.com/posts");
 	useEffect(() => {
-		//@ts-ignore
-		const VKID = window.VKIDSDK;
-		VKID.Config.set({
-			app: process.env.NEXT_PUBLIC_VK_APP_ID,
-			redirectUrl: process.env.NEXT_PUBLIC_REDIRECT_URL,
+		VKID.Config.init({
+			app: Number(process.env.NEXT_PUBLIC_VK_APP_ID),
+			redirectUrl: process.env.NEXT_PUBLIC_REDIRECT_URL
+				? process.env.NEXT_PUBLIC_REDIRECT_URL
+				: "",
 			state: "dj29fnsadjsd82",
 			codeVerifier: "FGH767Gd65",
-			scope: "email",
-			mode: VKID.ConfigAuthMode.InNewTab,
+			scope: "email phone",
 		});
 		const oneTap = new VKID.OneTap();
 		const container = document.getElementById("VkIdSdkOneTap");
@@ -23,19 +23,20 @@ export function HomePage() {
 		}
 		const params = new URLSearchParams(window.location.search);
 		let code = params.get("code");
-		let device_id = params.get("device_id");
+		let deviceId = params.get("device_id");
 		const exchangeCode = async () => {
-			console.log(VKID.Auth.exchangeCode);
 			try {
-				const result = await VKID.Auth.exchangeCode(code, device_id);
+				const result = await VKID.Auth.exchangeCode(
+					code ? code : "",
+					deviceId ? deviceId : ""
+				);
 				console.log("result", result);
 			} catch (error) {
 				console.log("Error");
 				console.error(error);
 			}
 		};
-		if (code && device_id) {
-			console.log(code.split(""), device_id.split(""));
+		if (code && deviceId) {
 			exchangeCode();
 		}
 	}, []);
