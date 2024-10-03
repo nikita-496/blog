@@ -25,6 +25,7 @@ export function HomePage() {
 		let code = params.get("code");
 		let device_id = params.get("device_id");
 		const exchangeCode = async () => {
+			console.log(VKID.Auth.exchangeCode);
 			try {
 				const result = await VKID.Auth.exchangeCode(code, device_id);
 				console.log("result", result);
