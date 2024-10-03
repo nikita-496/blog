@@ -34,7 +34,7 @@ export function HomePage() {
 			}
 		};
 		if (code && device_id) {
-			console.log(code, device_id);
+			console.log(code.split(""), device_id.split(""));
 			exchangeCode();
 		}
 	}, []);
